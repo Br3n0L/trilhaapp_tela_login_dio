@@ -10,8 +10,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool obscureText = true;
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
+  var emailController = TextEditingController(text: "");
+  var passwordController = TextEditingController(text: "");
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -111,6 +111,8 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   TextButton(
                     onPressed: () {
+                      print(emailController.text);
+                      print(passwordController.text);
                       if (emailController.text.trim() == "email@email.com" &&
                           passwordController.text.trim() == "123") {
                         Navigator.pushReplacement(
