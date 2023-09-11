@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:trilhaapp_tela_login_dio/pages/dados_cadastrais.dart';
+import 'package:trilhaapp_tela_login_dio/pages/login_page.dart';
 
 import 'package:trilhaapp_tela_login_dio/pages/main_page.dart';
 
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: MainPage(),
+      home: DadosCadastrais(),
       debugShowCheckedModeBanner: false,
     );
   }
