@@ -37,8 +37,8 @@ class _DadosCadastraisState extends State<DadosCadastrais> {
     var itens = <DropdownMenuItem<int>>[];
     for (var i = 0; i <= quantidadeMaxima; i++) {
       itens.add(DropdownMenuItem(
-        child: Text(i.toString()),
         value: i,
+        child: Text(i.toString()),
       ));
     }
     return itens;
@@ -177,7 +177,6 @@ class _DadosCadastraisState extends State<DadosCadastrais> {
                             "A pretensão salarial tem que ser menor que 0")));
                     return;
                   }
-                  print('Salvo com sucesso');
                 },
                 child: const Text("Salvar"),
               ),
