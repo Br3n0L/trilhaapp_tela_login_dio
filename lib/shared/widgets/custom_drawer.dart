@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trilhaapp_tela_login_dio/pages/dados_cadastrais.dart';
+import 'package:trilhaapp_tela_login_dio/pages/login_page.dart';
 import 'package:trilhaapp_tela_login_dio/pages/termos_de_uso.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -40,7 +41,7 @@ class CustomDrawer extends StatelessWidget {
             },
             child: UserAccountsDrawerHeader(
               currentAccountPicture: CircleAvatar(
-                child: Image.network(
+                child: Image.asset(
                     'https://hermes.digitalinnovation.one/assets/diome/logo.png'),
               ),
               accountName: const Text('Breno Leal'),
@@ -91,7 +92,34 @@ class CustomDrawer extends StatelessWidget {
           ),
           const Divider(),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext bc) => AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  title: const Text('Meu App'),
+                  content: const Text('Deseja realmente sair do aplicativo?'),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Não')),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                          );
+                        },
+                        child: const Text('Sim')),
+                  ],
+                ),
+              );
+            },
             child: const Text('Sair'),
           ),
           const Divider(),

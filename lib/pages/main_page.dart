@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:trilhaapp_tela_login_dio/pages/page1.dart';
-import 'package:trilhaapp_tela_login_dio/pages/page2.dart';
-import 'package:trilhaapp_tela_login_dio/pages/page3.dart';
+import 'package:trilhaapp_tela_login_dio/pages/card_page.dart';
+import 'package:trilhaapp_tela_login_dio/pages/image_assets.dart';
+import 'package:trilhaapp_tela_login_dio/pages/list_view_h.dart';
+import 'package:trilhaapp_tela_login_dio/pages/list_view_v.dart';
+import 'package:trilhaapp_tela_login_dio/pages/tarefa_page.dart';
 import 'package:trilhaapp_tela_login_dio/shared/widgets/custom_drawer.dart';
 
 class MainPage extends StatefulWidget {
@@ -20,7 +22,7 @@ class _MainPageState extends State<MainPage> {
       child: Scaffold(
           drawer: const CustomDrawer(),
           appBar: AppBar(
-            title: const Text('Bem-Vindo'),
+            title: const Text(''),
           ),
           body: Column(
             children: [
@@ -33,13 +35,16 @@ class _MainPageState extends State<MainPage> {
                     });
                   },
                   children: const [
-                    Page01(),
-                    Page02(),
-                    Page03(),
+                    CardPage(),
+                    ImageAssetsPage(),
+                    ListViewHPage(),
+                    ListViewHorizontal(),
+                    TarefaPage()
                   ],
                 ),
               ),
               BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
                 onTap: (value) {
                   controller.jumpToPage(value);
                 },
@@ -50,12 +55,20 @@ class _MainPageState extends State<MainPage> {
                     icon: Icon(Icons.home),
                   ),
                   BottomNavigationBarItem(
-                    label: "Dados",
+                    label: "Total",
                     icon: Icon(Icons.person),
                   ),
                   BottomNavigationBarItem(
-                    label: "Cursos",
-                    icon: Icon(Icons.menu),
+                    label: "Mensagens",
+                    icon: Icon(Icons.message),
+                  ),
+                  BottomNavigationBarItem(
+                    label: "Produtos",
+                    icon: Icon(Icons.post_add_rounded),
+                  ),
+                  BottomNavigationBarItem(
+                    label: "Tarefas",
+                    icon: Icon(Icons.list),
                   ),
                 ],
               ),
