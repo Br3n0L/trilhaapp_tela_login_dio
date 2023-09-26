@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:trilhaapp_tela_login_dio/pages/configuraacoes_page.dart';
+import 'package:trilhaapp_tela_login_dio/pages/configuracoes/configuraacoes_shared_preferences_page.dart';
 import 'package:trilhaapp_tela_login_dio/pages/dados_cadastrais.dart';
 import 'package:trilhaapp_tela_login_dio/pages/login_page.dart';
-import 'package:trilhaapp_tela_login_dio/pages/numeros_aleatorios_page.dart';
+import 'package:trilhaapp_tela_login_dio/pages/numeros_aleatorios/numeros_aleatorios_hive.dart';
+import 'package:trilhaapp_tela_login_dio/pages/numeros_aleatorios/numeros_aleatorios_shared_prefereces_page.dart';
 import 'package:trilhaapp_tela_login_dio/pages/termos_de_uso.dart';
 import 'package:trilhaapp_tela_login_dio/shared/widgets/app_images.dart';
 
@@ -92,9 +93,21 @@ class CustomDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const NumeroAleatoriosPage()));
+                      builder: (context) =>
+                          const NumeroAleatoriosSharedPreferencesPage()));
             },
             child: const Text('Gerador de numeros aleatórios'),
+          ),
+          const Divider(),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const NumeroAleatoriosHivePage()));
+            },
+            child: const Text('Hive'),
           ),
           const Divider(),
           InkWell(
@@ -108,7 +121,8 @@ class CustomDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: ((context) => const ConfiguracoesPage())));
+                      builder: ((context) =>
+                          const ConfiguracoesSharedPreferecesPage())));
             },
             child: const Text('Configurações'),
           ),

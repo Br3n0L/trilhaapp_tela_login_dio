@@ -1,21 +1,24 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class NumeroAleatoriosPage extends StatefulWidget {
-  const NumeroAleatoriosPage({Key? key}) : super(key: key);
+import 'package:trilhaapp_tela_login_dio/services/app_storage_services.dart';
+
+class NumeroAleatoriosSharedPreferencesPage extends StatefulWidget {
+  const NumeroAleatoriosSharedPreferencesPage({Key? key}) : super(key: key);
 
   @override
-  _NumeroAleatoriosPageState createState() => _NumeroAleatoriosPageState();
+  _NumeroAleatoriosSharedPreferencesPageState createState() =>
+      _NumeroAleatoriosSharedPreferencesPageState();
 }
 
-class _NumeroAleatoriosPageState extends State<NumeroAleatoriosPage> {
+class _NumeroAleatoriosSharedPreferencesPageState
+    extends State<NumeroAleatoriosSharedPreferencesPage> {
   int? numeroGerado;
-  int quantidadeDeCliques = 0; // Inicializado com 0
+  int quantidadeDeCliques = 0;
   final CHAVE_NUMERO_ALEATORIO = 'numero_aleatorio';
   final CHAVE_QUANTIDADE_CLIQUES = 'quantidade_cliques';
-  late SharedPreferences storage;
+  AppStorageService storage = AppStorageService();
 
   @override
   void initState() {
@@ -24,16 +27,9 @@ class _NumeroAleatoriosPageState extends State<NumeroAleatoriosPage> {
   }
 
   void carregarDados() async {
-    storage = await SharedPreferences.getInstance();
-    setState(() {
-      numeroGerado = storage.getInt(CHAVE_NUMERO_ALEATORIO);
-      quantidadeDeCliques = storage.getInt(CHAVE_QUANTIDADE_CLIQUES) ?? 0;
-    });
-  }
-
-  void salvarDados() {
-    storage.setInt(CHAVE_NUMERO_ALEATORIO, numeroGerado!);
-    storage.setInt(CHAVE_QUANTIDADE_CLIQUES, quantidadeDeCliques);
+    numeroGerado = await storage.getNumeroAleatorio();
+    quantidadeDeCliques = await storage.getQuantidadeCliques();
+    setState(() {});
   }
 
   @override
@@ -63,13 +59,14 @@ class _NumeroAleatoriosPageState extends State<NumeroAleatoriosPage> {
         ),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
-          onPressed: () {
+          onPressed: () async {
             var random = Random();
             setState(() {
               numeroGerado = random.nextInt(1000);
               quantidadeDeCliques++;
             });
-            salvarDados();
+            await storage.setNumeroAleatorio(numeroGerado!);
+            await storage.setQuantidadeCliques(quantidadeDeCliques);
           },
         ),
       ),

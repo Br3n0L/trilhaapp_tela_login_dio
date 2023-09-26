@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:trilhaapp_tela_login_dio/repositores/linguagens_repository.dart';
 import 'package:trilhaapp_tela_login_dio/repositores/nivel_repository.dart';
+import 'package:trilhaapp_tela_login_dio/services/app_storage_services.dart';
 import 'package:trilhaapp_tela_login_dio/shared/widgets/text_label.dart';
 
 class DadosCadastrais extends StatefulWidget {
@@ -27,7 +28,7 @@ class _DadosCadastraisState extends State<DadosCadastrais> {
   int tempoDeExperiencia = 0;
   bool salvando = false;
 
-  late SharedPreferences storage;
+  AppStorageService storage = AppStorageService();
   final String CHAVE_DADOS_CADASTRAIS_NOME = "CHAVE_DADOS_CADASTRAIS_NOME";
   final String CHAVE_DADOS_CADASTRAIS_DATA_NACISMENTO =
       "CHAVE_DADOS_CADASTRAIS_DATA_NACISMENTO";
@@ -49,17 +50,19 @@ class _DadosCadastraisState extends State<DadosCadastrais> {
   }
 
   carregarDados() async {
-    storage = await SharedPreferences.getInstance();
-    nomeControler.text = storage.getString(CHAVE_DADOS_CADASTRAIS_NOME) ?? '';
-    dataNascimentoControler.text =
-        storage.getString(CHAVE_DADOS_CADASTRAIS_DATA_NACISMENTO) ?? '';
-    nivelSelecionado =
-        storage.getString(CHAVE_DADOS_CADASTRAIS_NIVEL_EXPERIENCIA) ?? '';
+    nomeControler.text = await storage.getDadosCadastraisNome();
 
-    storage.getStringList(CHAVE_DADOS_CADASTRAIS_LINGUAGENS) ?? [];
-    tempoDeExperiencia =
-        storage.getInt(CHAVE_DADOS_CADASTRAIS_TEMPO_EXPERIENCIA) ?? 0;
-    salarioEscolhido = storage.getDouble(CHAVE_DADOS_CADASTRAIS_SALARIO) ?? 0;
+    dataNascimentoControler.text =
+        await storage.getDadosCadastraisDataNascimento();
+    if (dataNascimentoControler.text.isNotEmpty) {
+      dataNascimento = DateTime.parse(dataNascimentoControler.text);
+    }
+
+    nivelSelecionado = await storage.getDadosCadastraisNivelExperiencia();
+    linguagensSelecionadas = await storage.getDadosCadastraisLinguagens();
+    tempoDeExperiencia = await storage.getDadosCadastraisTempoDeExperiencia();
+    salarioEscolhido = await storage.getDadosCadastraisSalario();
+    setState(() {});
   }
 
   List<DropdownMenuItem<int>> returnItens(int quantidadeMaxima) {
@@ -204,21 +207,17 @@ class _DadosCadastraisState extends State<DadosCadastrais> {
                     return;
                   }
 
-                  await storage.setString(
-                      CHAVE_DADOS_CADASTRAIS_NOME, nomeControler.text);
-                  await storage.setString(
-                      CHAVE_DADOS_CADASTRAIS_DATA_NACISMENTO,
-                      dataNascimento.toString());
-                  await storage.setString(
-                      CHAVE_DADOS_CADASTRAIS_NIVEL_EXPERIENCIA,
-                      nivelSelecionado);
-                  await storage.setStringList(CHAVE_DADOS_CADASTRAIS_LINGUAGENS,
-                      linguagensSelecionadas);
-                  await storage.setInt(CHAVE_DADOS_CADASTRAIS_TEMPO_EXPERIENCIA,
-                      tempoDeExperiencia);
+                  await storage.setDadosCadastraisNomes(nomeControler.text);
+                  await storage
+                      .setDadosCadastraisDataNascimento(dataNascimento!);
+                  await storage
+                      .setDadosCadastraisNivelExperiencia(nivelSelecionado);
+                  await storage
+                      .setDadosCadastraisLinguagens(linguagensSelecionadas);
+                  await storage
+                      .setDadosCadastraisTempoDeExperiencia(tempoDeExperiencia);
 
-                  await storage.setDouble(
-                      CHAVE_DADOS_CADASTRAIS_SALARIO, salarioEscolhido);
+                  await storage.setDadosCadastraisSalario(salarioEscolhido);
 
                   setState(() {
                     salvando = true;
