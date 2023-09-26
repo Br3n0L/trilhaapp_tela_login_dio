@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:trilhaapp_tela_login_dio/pages/configuraacoes_page.dart';
 import 'package:trilhaapp_tela_login_dio/pages/dados_cadastrais.dart';
 import 'package:trilhaapp_tela_login_dio/pages/login_page.dart';
+import 'package:trilhaapp_tela_login_dio/pages/numeros_aleatorios_page.dart';
 import 'package:trilhaapp_tela_login_dio/pages/termos_de_uso.dart';
+import 'package:trilhaapp_tela_login_dio/shared/widgets/app_images.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
@@ -12,6 +15,13 @@ class CustomDrawer extends StatelessWidget {
       child: Column(
         children: [
           InkWell(
+            child: UserAccountsDrawerHeader(
+              currentAccountPicture: CircleAvatar(
+                child: Image.asset(AppImages.logoDio),
+              ),
+              accountName: const Text('Breno Leal'),
+              accountEmail: const Text('email@email.com'),
+            ),
             onTap: () {
               showModalBottomSheet(
                   shape: RoundedRectangleBorder(
@@ -39,18 +49,8 @@ class CustomDrawer extends StatelessWidget {
                     );
                   });
             },
-            child: UserAccountsDrawerHeader(
-              currentAccountPicture: CircleAvatar(
-                child: Image.asset(
-                    'https://hermes.digitalinnovation.one/assets/diome/logo.png'),
-              ),
-              accountName: const Text('Breno Leal'),
-              accountEmail: const Text('email@email.com'),
-            ),
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          const SizedBox(),
           const Text(
             "Menu",
             style: TextStyle(
@@ -87,8 +87,30 @@ class CustomDrawer extends StatelessWidget {
           ),
           const Divider(),
           InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const NumeroAleatoriosPage()));
+            },
+            child: const Text('Gerador de numeros aleatórios'),
+          ),
+          const Divider(),
+          InkWell(
             onTap: () {},
             child: const Text('Quem somos?'),
+          ),
+          const Divider(),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: ((context) => const ConfiguracoesPage())));
+            },
+            child: const Text('Configurações'),
           ),
           const Divider(),
           InkWell(
