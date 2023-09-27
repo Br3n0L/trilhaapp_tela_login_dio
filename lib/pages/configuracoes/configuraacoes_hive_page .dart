@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:trilhaapp_tela_login_dio/models/configuracoes_model.dart';
+import 'package:trilhaapp_tela_login_dio/repositores/configuracoes_repository.dart';
 
 import 'package:trilhaapp_tela_login_dio/services/app_storage_services.dart';
 
@@ -10,15 +13,11 @@ class ConfiguracoesHivePage extends StatefulWidget {
 }
 
 class _ConfiguracoesHivePageState extends State<ConfiguracoesHivePage> {
-  AppStorageService storage = AppStorageService();
+  late ConfiguracoesRepository configuracoesRepository;
+  ConfiguracoesModel configuracoesModel = ConfiguracoesModel.vazio();
 
   TextEditingController nomeUsuarioController = TextEditingController();
   TextEditingController alturaController = TextEditingController();
-
-  String? nomeUsuario;
-  double? altura;
-  bool receberNotificacoes = false;
-  bool temaEscuro = false;
 
   @override
   void initState() {
@@ -30,11 +29,11 @@ class _ConfiguracoesHivePageState extends State<ConfiguracoesHivePage> {
   }
 
   carregarDados() async {
-    nomeUsuarioController.text =
-        await storage.getConfiguracoesPageNomeDoUsuario();
-    alturaController.text = (await storage.getConfiguracoesAltura()).toString();
-    receberNotificacoes = await storage.getConfiguracoesReceberNotificacoes();
-    temaEscuro = await storage.getConfiguracoesModoEscuro();
+    configuracoesRepository = await ConfiguracoesRepository.carregar();
+    configuracoesModel = configuracoesRepository.obterDados();
+    nomeUsuarioController.text = configuracoesModel.nomeUsuario;
+
+    alturaController.text = configuracoesModel.altura.toString();
   }
 
   @override
@@ -64,25 +63,25 @@ class _ConfiguracoesHivePageState extends State<ConfiguracoesHivePage> {
                     title: Text("Receber notificações"),
                     onChanged: (bool value) {
                       setState(() {
-                        receberNotificacoes = value;
+                        configuracoesModel.receberNotificacoes = value;
                       });
                     },
-                    value: receberNotificacoes,
+                    value: configuracoesModel.receberNotificacoes,
                   ),
                   SwitchListTile(
                       title: Text("Tema escuro"),
-                      value: temaEscuro,
+                      value: configuracoesModel.temaEscuro,
                       onChanged: (bool value) {
                         setState(() {
-                          temaEscuro = value;
+                          configuracoesModel.temaEscuro = value;
                         });
                       }),
                   TextButton(
                       onPressed: () async {
                         FocusManager.instance.primaryFocus?.unfocus();
                         try {
-                          await storage.setConfiguracoesAltura(
-                              double.parse(alturaController.text));
+                          configuracoesModel.altura =
+                              double.parse(alturaController.text);
                         } catch (e) {
                           showDialog(
                               context: context,
@@ -102,11 +101,10 @@ class _ConfiguracoesHivePageState extends State<ConfiguracoesHivePage> {
                               });
                           return;
                         }
-                        await storage.setConfiguracoesPageNomeDoUsuario(
-                            nomeUsuarioController.text);
-                        await storage.setConfiguracoesReceberNotificacoes(
-                            receberNotificacoes);
-                        await storage.setConfiguracoesModoEscuro(temaEscuro);
+                        configuracoesModel.nomeUsuario =
+                            nomeUsuarioController.text;
+                        configuracoesRepository.salvar(configuracoesModel);
+
                         Navigator.pop(context);
                       },
                       child: Text("Salvar"))

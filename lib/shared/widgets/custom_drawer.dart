@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:trilhaapp_tela_login_dio/pages/configuracoes/configuraacoes_shared_preferences_page.dart';
-import 'package:trilhaapp_tela_login_dio/pages/dados_cadastrais.dart';
+import 'package:trilhaapp_tela_login_dio/pages/configuracoes/configuraacoes_hive_page%20.dart';
+
+import 'package:trilhaapp_tela_login_dio/pages/dados_cadastrais/dados_cadastrais_hive.dart';
 import 'package:trilhaapp_tela_login_dio/pages/login_page.dart';
 import 'package:trilhaapp_tela_login_dio/pages/numeros_aleatorios/numeros_aleatorios_hive.dart';
 import 'package:trilhaapp_tela_login_dio/pages/numeros_aleatorios/numeros_aleatorios_shared_prefereces_page.dart';
@@ -68,7 +69,7 @@ class CustomDrawer extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const DadosCadastrais()));
+                        builder: (context) => const DadosCadastraisHivePage()));
               },
               child: const Text('Dados Cadastrais'),
             ),
@@ -121,8 +122,7 @@ class CustomDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: ((context) =>
-                          const ConfiguracoesSharedPreferecesPage())));
+                      builder: ((context) => const ConfiguracoesHivePage())));
             },
             child: const Text('Configurações'),
           ),

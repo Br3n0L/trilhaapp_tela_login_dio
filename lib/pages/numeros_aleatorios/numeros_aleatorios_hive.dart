@@ -31,8 +31,9 @@ class _NumeroAleatoriosHivePageState extends State<NumeroAleatoriosHivePage> {
       boxNumerosAleatorios = await Hive.openBox('box_numeros_aleatorios');
     }
 
-    numeroGerado = boxNumerosAleatorios.get('numeroGerado') ?? 0;
-    quantidadeDeCliques = boxNumerosAleatorios.get('quantidadeDeCliques') ?? 0;
+    numeroGerado = await boxNumerosAleatorios.get('numeroGerado') ?? 0;
+    quantidadeDeCliques =
+        await boxNumerosAleatorios.get('quantidadeDeCliques') ?? 0;
     setState(() {});
   }
 
