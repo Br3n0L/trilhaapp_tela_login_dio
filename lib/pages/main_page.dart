@@ -3,7 +3,8 @@ import 'package:trilhaapp_tela_login_dio/pages/card_page.dart';
 import 'package:trilhaapp_tela_login_dio/pages/image_assets.dart';
 import 'package:trilhaapp_tela_login_dio/pages/list_view_h.dart';
 import 'package:trilhaapp_tela_login_dio/pages/list_view_v.dart';
-import 'package:trilhaapp_tela_login_dio/pages/tarefa_page.dart';
+import 'package:trilhaapp_tela_login_dio/pages/tarefas_page/tarefa_hive_page.dart';
+import 'package:trilhaapp_tela_login_dio/pages/tarefas_page/tarefa_sqlite_page.dart';
 import 'package:trilhaapp_tela_login_dio/shared/widgets/custom_drawer.dart';
 
 class MainPage extends StatefulWidget {
@@ -39,7 +40,7 @@ class _MainPageState extends State<MainPage> {
                     ImageAssetsPage(),
                     ListViewHPage(),
                     ListViewHorizontal(),
-                    TarefaPage()
+                    TarefaSQLitePage(),
                   ],
                 ),
               ),

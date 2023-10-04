@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:trilhaapp_tela_login_dio/models/dados_cadastrais.dart';
+import 'package:trilhaapp_tela_login_dio/models/tarefa_hive_model.dart';
 
 import 'package:trilhaapp_tela_login_dio/pages/main_page.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -11,6 +12,7 @@ void main() async {
       await path_provider.getApplicationDocumentsDirectory();
   Hive.init(documentsDirectory.path);
   Hive.registerAdapter(DadosCadastraisModelAdapter());
+  Hive.registerAdapter(TarefaHiveModelAdapter());
 
   runApp(const MyApp());
 }

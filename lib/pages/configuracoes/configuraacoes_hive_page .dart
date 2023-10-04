@@ -3,8 +3,6 @@ import 'package:hive/hive.dart';
 import 'package:trilhaapp_tela_login_dio/models/configuracoes_model.dart';
 import 'package:trilhaapp_tela_login_dio/repositores/configuracoes_repository.dart';
 
-import 'package:trilhaapp_tela_login_dio/services/app_storage_services.dart';
-
 class ConfiguracoesHivePage extends StatefulWidget {
   const ConfiguracoesHivePage({Key? key}) : super(key: key);
 
