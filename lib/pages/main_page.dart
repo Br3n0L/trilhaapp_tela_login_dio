@@ -5,6 +5,7 @@ import 'package:trilhaapp_tela_login_dio/pages/list_view_h.dart';
 import 'package:trilhaapp_tela_login_dio/pages/list_view_v.dart';
 import 'package:trilhaapp_tela_login_dio/pages/tarefas_page/tarefa_hive_page.dart';
 import 'package:trilhaapp_tela_login_dio/pages/tarefas_page/tarefa_sqlite_page.dart';
+import 'package:trilhaapp_tela_login_dio/pages/tarefas_page/constulta_cep.dart';
 import 'package:trilhaapp_tela_login_dio/shared/widgets/custom_drawer.dart';
 
 class MainPage extends StatefulWidget {
@@ -36,6 +37,7 @@ class _MainPageState extends State<MainPage> {
                     });
                   },
                   children: const [
+                    ConsultaCep(),
                     CardPage(),
                     ImageAssetsPage(),
                     ListViewHPage(),
@@ -51,6 +53,10 @@ class _MainPageState extends State<MainPage> {
                 },
                 currentIndex: posicaoPagina,
                 items: const [
+                  BottomNavigationBarItem(
+                    label: "HTPP",
+                    icon: Icon(Icons.get_app_rounded),
+                  ),
                   BottomNavigationBarItem(
                     label: "Home",
                     icon: Icon(Icons.home),
