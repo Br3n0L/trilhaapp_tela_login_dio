@@ -5,6 +5,7 @@ import 'package:trilhaapp_tela_login_dio/pages/dados_cadastrais/dados_cadastrais
 import 'package:trilhaapp_tela_login_dio/pages/login_page.dart';
 import 'package:trilhaapp_tela_login_dio/pages/numeros_aleatorios/numeros_aleatorios_hive.dart';
 import 'package:trilhaapp_tela_login_dio/pages/numeros_aleatorios/numeros_aleatorios_shared_prefereces_page.dart';
+import 'package:trilhaapp_tela_login_dio/pages/posts_page.dart';
 import 'package:trilhaapp_tela_login_dio/pages/termos_de_uso.dart';
 import 'package:trilhaapp_tela_login_dio/shared/widgets/app_images.dart';
 
@@ -125,6 +126,15 @@ class CustomDrawer extends StatelessWidget {
                       builder: ((context) => const ConfiguracoesHivePage())));
             },
             child: const Text('Configurações'),
+          ),
+          const Divider(),
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => const PostPage())));
+            },
+            child: const Text('Posts'),
           ),
           const Divider(),
           InkWell(

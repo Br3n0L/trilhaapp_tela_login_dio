@@ -1,4 +1,4 @@
-class ViaCEPModel {
+class ViaCepModel {
   String? _cep;
   String? _logradouro;
   String? _complemento;
@@ -10,7 +10,7 @@ class ViaCEPModel {
   String? _ddd;
   String? _siafi;
 
-  ViaCEPModel(
+  ViaCepModel(
       {String? cep,
       String? logradouro,
       String? complemento,
@@ -74,7 +74,7 @@ class ViaCEPModel {
   String? get siafi => _siafi;
   set siafi(String? siafi) => _siafi = siafi;
 
-  ViaCEPModel.fromJson(Map<String, dynamic> json) {
+  ViaCepModel.fromJson(Map<String, dynamic> json) {
     _cep = json['cep'];
     _logradouro = json['logradouro'];
     _complemento = json['complemento'];

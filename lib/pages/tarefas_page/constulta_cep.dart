@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:trilhaapp_tela_login_dio/models/via_cep_model.dart';
+import 'package:trilhaapp_tela_login_dio/repositores/via_cep_repository.dart';
 
 class ConsultaCep extends StatefulWidget {
   const ConsultaCep({super.key});
@@ -15,7 +16,7 @@ class _ConsultaCepState extends State<ConsultaCep> {
   TextEditingController _controllerCep = TextEditingController();
 
   bool loading = false;
-  var viaCepModel = ViaCEPModel();
+  var viaCepModel = ViaCepModel();
 
   @override
   Widget build(BuildContext context) {
@@ -30,38 +31,26 @@ class _ConsultaCepState extends State<ConsultaCep> {
                 style: TextStyle(fontSize: 22),
               ),
               TextField(
-                keyboardType: TextInputType.number,
-                controller: _controllerCep,
-                onChanged: (String value) async {
-                  var cep = value.replaceAll(RegExp(r'[^0-9]'), '');
-                  String url = 'https://viacep.com.br/ws/$cep/json/';
+                  keyboardType: TextInputType.number,
+                  controller: _controllerCep,
+                  onChanged: (String value) async {
+                    var cep = value.replaceAll(RegExp(r'[^0-9]'), '');
+                    String url = 'https://viacep.com.br/ws/$cep/json/';
 
-                  if (cep.length == 8) {
+                    if (cep.length == 8) {
+                      setState(() {
+                        loading = true;
+                      });
+                      ViaCepRepository repository = ViaCepRepository();
+                      viaCepModel = await repository.consultarCep(cep);
+                    } else {
+                      // Lidar com outros casos, se necessário
+                    }
+
                     setState(() {
-                      loading = true;
+                      loading = false;
                     });
-
-                    try {
-                      var response = await http.get(Uri.parse(url));
-                      if (response.statusCode == 200) {
-                        print('Requisição bem-sucedida');
-
-                        var jsonResponse = json.decode(response.body);
-                        viaCepModel = ViaCEPModel.fromJson(jsonResponse);
-                        print(viaCepModel);
-
-                        viaCepModel.localidade ?? '';
-                        viaCepModel.uf ?? '';
-                        viaCepModel.logradouro ?? '';
-                      }
-                    } catch (e) {}
-                  } else {}
-
-                  setState(() {
-                    loading = false;
-                  });
-                },
-              ),
+                  }),
               const SizedBox(
                 height: 50,
               ),
