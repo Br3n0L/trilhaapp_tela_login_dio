@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trilhaapp_tela_login_dio/models/post_model.dart';
+import 'package:trilhaapp_tela_login_dio/pages/comments_page.dart';
 import 'package:trilhaapp_tela_login_dio/repositores/post_repository.dart';
 
 class PostPage extends StatefulWidget {
@@ -36,29 +37,40 @@ class _PostPageState extends State<PostPage> {
             itemBuilder: (_, index) {
               var post = posts[index];
 
-              return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                child: Card(
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          post.title,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w700),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          post.body,
-                          style: const TextStyle(
-                              fontSize: 12, fontWeight: FontWeight.w400),
-                        ),
-                      ],
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CommentsPage(
+                                postid: post.id,
+                              )));
+                },
+                child: Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  child: Card(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            post.title,
+                            style: const TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.w700),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            post.body,
+                            style: const TextStyle(
+                                fontSize: 12, fontWeight: FontWeight.w400),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

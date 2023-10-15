@@ -21,7 +21,6 @@ class PostRepository {
         throw Exception('Falha na solicitação HTTP');
       }
     } catch (e) {
-      // Trate a exceção aqui e retorne algo apropriado, como uma lista vazia
       print('Erro: $e');
       return [];
     }
